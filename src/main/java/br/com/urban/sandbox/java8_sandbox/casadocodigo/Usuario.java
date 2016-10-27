@@ -1,13 +1,15 @@
 package br.com.urban.sandbox.java8_sandbox.casadocodigo;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 class Usuario {
-	
+
 	private int pontos;
 	private String nome;
 	private boolean moderador;
-	
+
 	public Usuario(String nome) {
 		this.nome = nome;
 	}
@@ -35,7 +37,7 @@ class Usuario {
 	public void tornaModerador() {
 		this.moderador = true;
 	}
-	
+
 	public String toString() {
 		return "Usuario " + nome;
 	}

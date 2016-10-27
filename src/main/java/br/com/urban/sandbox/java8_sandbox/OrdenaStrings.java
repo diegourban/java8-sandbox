@@ -17,7 +17,7 @@ public class OrdenaStrings {
 		palavras.sort(Comparator.comparing(String::length));
 
 		palavras.forEach(s -> System.out.println(s));
-		
+
 		new Thread(() -> System.out.println("Executando um Runnable")).start();
 	}
 

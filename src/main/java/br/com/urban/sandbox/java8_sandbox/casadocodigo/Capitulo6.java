@@ -5,12 +5,16 @@ import static java.util.Comparator.comparing;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
+import java.util.function.ToIntBiFunction;
 
 class Capitulo6 {
 
 	public static void main(String[] args) {
-		
+
 		Usuario u1 = new Usuario("Paulo Silveira", 150);
 		Usuario u2 = new Usuario("Rodrigo Turini", 120);
 		Usuario u3 = new Usuario("Guilherme Silveira", 190);
@@ -25,9 +29,9 @@ class Capitulo6 {
 		usuarios.forEach(tornaModerador);
 
 		usuarios.sort(Comparator.comparing(u -> u.getNome()));
-		
+
 		usuarios.sort(Comparator.comparing(Usuario::getNome));
-		
+
 		Function<Usuario, String> byName = Usuario::getNome;
 		usuarios.sort(comparing(byName));
 
@@ -35,59 +39,65 @@ class Capitulo6 {
 
 		usuarios.sort(Comparator.comparingInt(Usuario::getPontos));
 
+		Comparator<Usuario> c = Comparator.comparingInt(Usuario::getPontos).thenComparing(Usuario::getNome);
+		System.out.println(c);
 
-		Comparator<Usuario> c = Comparator.comparingInt(Usuario::getPontos)
-                                 .thenComparing(Usuario::getNome);
+		usuarios.sort(Comparator.comparingInt(Usuario::getPontos).thenComparing(Usuario::getNome));
 
-        usuarios.sort(Comparator.comparingInt(Usuario::getPontos)
-                            .thenComparing(Usuario::getNome));
+		usuarios.sort(Comparator.nullsLast(Comparator.comparing(Usuario::getNome)));
 
-        usuarios.sort(Comparator.nullsLast(
-                      	Comparator.comparing(Usuario::getNome)));
+		// necessidade de tipagem para inferencia correta:
+		usuarios.sort(Comparator.comparingInt((Usuario u) -> u.getPontos()).thenComparing(u -> u.getNome()));
 
-        // necessidade de tipagem para inferencia correta:
-        usuarios.sort(Comparator.comparingInt((Usuario u) -> u.getPontos())
-                            .thenComparing(u -> u.getNome()));
+		Comparator<Usuario> comparator = Comparator.comparing(u -> u.getPontos());
+		usuarios.sort(comparator.thenComparing(u -> u.getNome()));
 
- 		Comparator<Usuario> comparator = Comparator.comparing(u -> u.getPontos());
-        usuarios.sort(comparator.thenComparing(u -> u.getNome()));
+		Comparator<Usuario> comparator2 = Comparator.comparing(u -> u.getNome());
+		usuarios.sort(comparator2.reversed());
 
-        Comparator<Usuario> comparator2 = Comparator.comparing(u -> u.getNome());
-        usuarios.sort(comparator2.reversed());
+		usuarios.sort(Comparator.comparing(Usuario::getPontos).reversed());
 
-        usuarios.sort(Comparator.comparing(Usuario::getPontos).reversed());
+		usuarios.sort(Comparator.<Usuario, Integer>comparing(u -> u.getPontos()).reversed());
 
-
-        usuarios.sort(Comparator.<Usuario, Integer>comparing(u -> u.getPontos()).reversed());	
-        
-        // esse o compilador nao infere e da erro: 
+		// esse o compilador nao infere e da erro:
 		// usuarios.sort(Comparator.comparing(u -> u.getPontos()).reversed());
 
 		// metodos estaticos:
 
 		usuarios.forEach(System.out::println);
-		
+
 		Function<String, Usuario> criadorDeUsuarios = Usuario::new;
 		Usuario rodrigo = criadorDeUsuarios.apply("Rodrigo Turini");
 		Usuario paulo = criadorDeUsuarios.apply("Paulo Silveira");
-		
+		System.out.println(paulo);
+
 		BiFunction<String, Integer, Usuario> criadorDeUsuarios2 = Usuario::new;
 		Usuario rodrigo2 = criadorDeUsuarios2.apply("Rodrigo Turini", 50);
 		Usuario paulo2 = criadorDeUsuarios2.apply("Paulo Silveira", 300);
+		System.out.println(rodrigo2);
+		System.out.println(paulo2);
 
-		
 		Runnable bloco = rodrigo::tornaModerador;
+		System.out.println(bloco);
 
 		Runnable bloco1 = rodrigo::tornaModerador;
-		Runnable bloco2 = () -> rodrigo.tornaModerador();
+		System.out.println(bloco1);
 
+		Runnable bloco2 = () -> rodrigo.tornaModerador();
+		System.out.println(bloco2);
 
 		Consumer<Usuario> consumer1 = Usuario::tornaModerador;
+		System.out.println(consumer1);
+
 		Consumer<Usuario> consumer2 = (u) -> u.tornaModerador();
+		System.out.println(consumer2);
 
 		BiFunction<Integer, Integer, Integer> max = Math::max;
 		ToIntBiFunction<Integer, Integer> max2 = Math::max;
 		IntBinaryOperator max3 = Math::max;
 
+		System.out.println(max);
+		System.out.println(max2);
+		System.out.println(max3);
 	}
 }
