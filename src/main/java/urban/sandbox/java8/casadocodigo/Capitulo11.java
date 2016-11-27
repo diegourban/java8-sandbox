@@ -1,4 +1,4 @@
-package br.com.urban.sandbox.java8_sandbox.casadocodigo;
+package urban.sandbox.java8.casadocodigo;
 
 import static java.util.Arrays.asList;
 

@@ -1,4 +1,4 @@
-package br.com.urban.sandbox.java8_sandbox;
+package urban.sandbox.java8;
 
 import java.util.ArrayList;
 import java.util.Comparator;

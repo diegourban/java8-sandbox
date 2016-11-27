@@ -1,4 +1,4 @@
-package br.com.urban.sandbox.java8_sandbox.casadocodigo;
+package urban.sandbox.java8.casadocodigo;
 
 import java.util.Collections;
 import java.util.HashSet;
